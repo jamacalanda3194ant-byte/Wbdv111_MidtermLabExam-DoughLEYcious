@@ -1,4 +1,4 @@
-/* ================= IMPORT FONT ================= */
+/* ================= font ================= */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 /* ================= GLOBAL ================= */
@@ -9,6 +9,7 @@
   padding: 0;
 }
 
+/* ================= homepage ================= */
 html, body {
   height: 100%;
 }
@@ -29,7 +30,7 @@ section {
   flex: 1;
 }
 
-/* ================= SCROLLBAR ================= */
+/* ================= scrollbar ================= */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -47,7 +48,7 @@ section {
   background: #4a3130;
 }
 
-/* ================= NAVBAR ================= */
+/* ================= navigation bar ================= */
 .navbar {
   background: black;
   position: sticky;
@@ -65,7 +66,7 @@ section {
   padding: 15px 30px;
 }
 
-/* LOGO */
+/* logo */
 .nav-logo {
   color: #c8a97e;
   font-size: 1.6rem;
@@ -80,7 +81,7 @@ section {
   transform: scale(1.05);
 }
 
-/* NAV LINKS */
+/* navigation links */
 .nav-links {
   list-style: none;
   display: flex;
@@ -98,7 +99,7 @@ section {
   transition: color 0.3s;
 }
 
-/* HOVER UNDERLINE EFFECT */
+/* hover underline text */
 .nav-links a::after {
   content: "";
   position: absolute;
@@ -119,13 +120,13 @@ section {
   color: #fff;
 }
 
-/* ACTIVE LINK */
+/* active links */
 .nav-links a.active {
   color: #fff;
   font-weight: 600;
 }
 
-/* ================= HEADER / HERO ================= */
+/* ================= hero section ================= */
 .header {
   position: relative;
   overflow: hidden;
@@ -144,7 +145,7 @@ section {
   transform: scale(1.03);
 }
 
-/* HERO OVERLAY TEXT */
+/* hero overlay text */
 .header-overlay {
   position: absolute;
   top: 50%;
@@ -169,7 +170,7 @@ section {
   color: #ffe4b5;
 }
 
-/* ================= HOME / ORDER SECTION ================= */
+/* ================= home / order section ================= */
 .home-section {
   text-align: center;
   padding: 60px 20px;
@@ -183,7 +184,7 @@ section {
   display: inline-block;
 }
 
-/* UNDERLINE DECORATION */
+/* underline */
 .home-section h2::after {
   content: "";
   display: block;
@@ -200,7 +201,7 @@ section {
   margin-bottom: 25px;
 }
 
-/* ORDER BUTTONS */
+/* order buttons */
 .order-options {
   margin-top: 20px;
   display: flex;
@@ -234,7 +235,7 @@ section {
   transform: scale(0.95);
 }
 
-/* ================= CARDS SECTION ================= */
+/* ================= cards section ================= */
 .cards-section {
   padding: 40px 20px;
   text-align: center;
@@ -253,7 +254,7 @@ section {
   gap: 25px;
 }
 
-/* PRODUCT CARD */
+/* product card */
 .card {
   background: white;
   border-radius: 20px;
@@ -331,7 +332,7 @@ section {
   transform: scale(1.03);
 }
 
-/* ================= BADGE / TAG ================= */
+/* ================= badge ================= */
 .badge {
   position: absolute;
   top: 15px;
@@ -355,7 +356,7 @@ section {
   background: #e74c3c;
 }
 
-/* ================= DIVIDER ================= */
+/* ================= divider ================= */
 .divider {
   width: 80px;
   height: 4px;
@@ -364,7 +365,7 @@ section {
   border-radius: 5px;
 }
 
-/* ================= TOAST NOTIFICATION ================= */
+/* ================= notification ================= */
 .toast {
   position: fixed;
   bottom: 30px;
@@ -386,7 +387,8 @@ section {
   transform: translateY(0);
 }
 
-/* ================= SHOP BANNER ================= */
+/* ================= shop section ================= */
+/* ================= shop banner ================= */
 .shop-banner {
   background: linear-gradient(135deg, #674846, #c8a97e);
   padding: 60px 20px;
@@ -427,14 +429,14 @@ section {
   margin-top: 8px;
 }
 
-/* ================= SHOP CONTAINER ================= */
+/* ================= container ng shop ================= */
 .shop-container {
   max-width: 1200px;
   margin: 40px auto;
   padding: 0 20px 60px;
 }
 
-/* SHOP TITLE */
+/* shop title */
 .shop-title {
   text-align: center;
   font-size: 2rem;
@@ -443,7 +445,7 @@ section {
   margin-bottom: 5px;
 }
 
-/* ================= PRODUCT GRID ================= */
+/* ================= product grids ================= */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -451,7 +453,7 @@ section {
   margin-top: 30px;
 }
 
-/* ================= PRODUCT CARD ================= */
+/* ================= card product ================= */
 .product-card {
   background: white;
   border-radius: 20px;
@@ -463,7 +465,7 @@ section {
   flex-direction: column;
 }
 
-/* TOP GRADIENT LINE */
+/* top gradient line */
 .product-card::before {
   content: "";
   position: absolute;
@@ -480,7 +482,7 @@ section {
   box-shadow: 0 15px 35px rgba(103, 72, 70, 0.2);
 }
 
-/* PRODUCT IMAGE */
+/* picture ng product */
 .product-card img {
   width: 100%;
   height: 200px;
@@ -493,7 +495,7 @@ section {
   transform: scale(1.05);
 }
 
-/* PRODUCT INFO */
+/* product info */
 .product-info {
   padding: 18px;
   display: flex;
@@ -509,7 +511,7 @@ section {
   margin: 0;
 }
 
-/* PRODUCT DESCRIPTION */
+/* description ng product */
 .product-desc {
   font-size: 0.82rem;
   color: #aaa;
@@ -517,7 +519,7 @@ section {
   line-height: 1.4;
 }
 
-/* PRICE */
+/* price */
 .product-info .price {
   font-size: 1.2rem;
   font-weight: 700;
@@ -525,7 +527,7 @@ section {
   margin: 0;
 }
 
-/* ================= QUANTITY CONTROLS ================= */
+/* ================= quantity controls ================= */
 .quantity {
   display: flex;
   align-items: center;
@@ -565,7 +567,7 @@ section {
   font-size: 0.95rem;
   font-family: 'Poppins', sans-serif
 }
-/* ================= SHOP BANNER ================= */
+/* ================= shop banner ================= */
 .shop-banner {
   background: linear-gradient(135deg, #674846, #c8a97e);
   padding: 60px 20px;
@@ -608,14 +610,14 @@ section {
   margin-top: 8px;
 }
 
-/* ================= SHOP CONTAINER ================= */
+/* ================= container ng shop ================= */
 .shop-container {
   max-width: 1200px;
   margin: 40px auto;
   padding: 0 20px 60px;
 }
 
-/* SHOP TITLE */
+/* title ng shop */
 .shop-title {
   text-align: center;
   font-size: 2rem;
@@ -624,7 +626,7 @@ section {
   margin-bottom: 5px;
 }
 
-/* ================= PRODUCT GRID ================= */
+/* ================= product grids ================= */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -632,7 +634,7 @@ section {
   margin-top: 30px;
 }
 
-/* ================= PRODUCT CARD ================= */
+/* ================= product card ================= */
 .product-card {
   background: white;
   border-radius: 20px;
@@ -644,7 +646,7 @@ section {
   flex-direction: column;
 }
 
-/* TOP GRADIENT LINE */
+/* top gradient line */
 .product-card::before {
   content: "";
   position: absolute;
@@ -661,7 +663,7 @@ section {
   box-shadow: 0 15px 35px rgba(103, 72, 70, 0.2);
 }
 
-/* PRODUCT IMAGE */
+/* picture ng product */
 .product-card img {
   width: 100%;
   height: 200px;
@@ -674,7 +676,7 @@ section {
   transform: scale(1.05);
 }
 
-/* PRODUCT INFO */
+/* product infos */
 .product-info {
   padding: 18px;
   display: flex;
@@ -690,7 +692,7 @@ section {
   margin: 0;
 }
 
-/* PRODUCT DESCRIPTION */
+/* product descriptions */
 .product-desc {
   font-size: 0.82rem;
   color: #aaa;
@@ -698,7 +700,7 @@ section {
   line-height: 1.4;
 }
 
-/* PRICE */
+/* price */
 .product-info .price {
   font-size: 1.2rem;
   font-weight: 700;
@@ -706,7 +708,7 @@ section {
   margin: 0;
 }
 
-/* ================= QUANTITY CONTROLS ================= */
+/* ================= quantity controls ================= */
 .quantity {
   display: flex;
   align-items: center;
@@ -755,7 +757,7 @@ section {
   border-color: #c8a97e;
 }
 
-/* Hide number input arrows */
+/* hide number input arrows */
 .quantity input::-webkit-outer-spin-button,
 .quantity input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -763,7 +765,7 @@ section {
 }
 
 
-/* ================= ADD TO CART BUTTON ================= */
+/* ================= add to cart button ================= */
 .add-to-cart-btn {
   margin-top: auto;
   background: linear-gradient(135deg, #674846, #c8a97e);
@@ -791,7 +793,7 @@ section {
   transform: scale(0.97);
 }
 
-/* ================= HERO BUTTON ================= */
+/* ================= hero button ================= */
 .hero-btn {
   background: linear-gradient(135deg, #674846, #c8a97e);
   color: white;
@@ -817,7 +819,7 @@ section {
   transform: scale(0.97);
 }
 
-/* OUTLINE BUTTON */
+/* outline button */
 .hero-btn-outline {
   background: transparent;
   color: #674846;
@@ -843,7 +845,7 @@ section {
   transform: scale(0.97);
 }
 
-/* ================= FEATURES SECTION ================= */
+/* ================= features section ================= */
 .features-section {
   padding: 60px 20px;
   background: #fff3cd;
@@ -867,7 +869,7 @@ section {
   margin-right: auto;
 }
 
-/* FEATURE CARD */
+/* feature card */
 .feature-card {
   background: white;
   border-radius: 20px;
@@ -878,7 +880,7 @@ section {
   overflow: hidden;
 }
 
-/* TOP GRADIENT LINE */
+/* top gradient line */
 .feature-card::before {
   content: "";
   position: absolute;
@@ -912,14 +914,14 @@ section {
   line-height: 1.5;
 }
 
-/* ================= CONTAINER ================= */
+/* ================= container ================= */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* ================= RESPONSIVE ================= */
+/* ================= for responsive ================= */
 @media (max-width: 768px) {
   .features-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -963,7 +965,7 @@ section {
   }
 }
 
-/* ================= ABOUT BANNER ================= */
+/* ================= about banner ================= */
 .about-banner {
   background: linear-gradient(135deg, #674846, #c8a97e);
   padding: 80px 20px;
@@ -1006,7 +1008,7 @@ section {
   margin-top: 8px;
 }
 
-/* ================= ABOUT SECTION ================= */
+/* ================= about section ================= */
 .about-section {
   padding: 80px 20px;
   background: #fff8dc;
@@ -1020,7 +1022,7 @@ section {
   margin: 0 auto;
 }
 
-/* STORY IMAGE */
+/* story image */
 .about-story-img {
   flex: 1;
   border-radius: 20px;
@@ -1041,7 +1043,7 @@ section {
   transform: scale(1.05);
 }
 
-/* STORY TEXT */
+/* story text */
 .about-story-text {
   flex: 1;
 }
@@ -1064,7 +1066,7 @@ section {
   margin-top: 10px;
 }
 
-/* ================= VALUES SECTION ================= */
+/* ================= values section ================= */
 .values-section {
   padding: 80px 20px;
   background: #fff3cd;
@@ -1081,7 +1083,7 @@ section {
   margin-right: auto;
 }
 
-/* VALUE CARD */
+/* value card */
 .value-card {
   background: white;
   border-radius: 20px;
@@ -1125,7 +1127,7 @@ section {
   line-height: 1.6;
 }
 
-/* ================= TEAM SECTION ================= */
+/* ================= team section ================= */
 .team-section {
   padding: 80px 20px;
   background: #fff8dc;
@@ -1140,7 +1142,7 @@ section {
   margin-top: 30px;
 }
 
-/* TEAM CARD */
+/* team card */
 .team-card {
   background: white;
   border-radius: 20px;
@@ -1149,7 +1151,7 @@ section {
   box-shadow: 0 5px 20
 }
 
-/* ================= ORDER BANNER ================= */
+/* ================= order banner ================= */
 .order-banner {
   background: linear-gradient(135deg, #674846, #c8a97e);
   padding: 80px 20px;
@@ -1192,7 +1194,7 @@ section {
   margin-top: 8px;
 }
 
-/* ================= BOX SECTION ================= */
+/* ================= box section ================= */
 .box-section {
   padding: 80px 20px;
   background: #fff8dc;
@@ -1205,7 +1207,7 @@ section {
   margin-bottom: 40px;
 }
 
-/* ================= BOX GRID ================= */
+/* ================= box grid ================= */
 .box-grid {
   display: flex;
   flex-wrap: wrap;
@@ -1214,7 +1216,7 @@ section {
   margin-top: 10px;
 }
 
-/* ================= BOX CARD ================= */
+/* ================ box card ====== */
 .box-card {
   background: white;
   border-radius: 24px;
@@ -1244,7 +1246,7 @@ section {
   box-shadow: 0 20px 45px rgba(103, 72, 70, 0.2);
 }
 
-/* POPULAR CARD */
+/* popular card section */
 .box-card.popular {
   border: 2px solid #c8a97e;
   transform: scale(1.03);
@@ -1255,13 +1257,13 @@ section {
   transform: scale(1.03) translateY(-10px);
 }
 
-/* BOX ICON */
+/* box icon */
 .box-icon {
   font-size: 2.5rem;
   margin-bottom: 15px;
 }
 
-/* BOX BADGE */
+/* box badge */
 .box-badge {
   display: inline-block;
   background: #674846;
@@ -1282,7 +1284,7 @@ section {
   background: #c8a97e;
 }
 
-/* BOX TITLE */
+/* box title */
 .box-card h3 {
   font-size: 1.4rem;
   color: #674846;
@@ -1290,7 +1292,7 @@ section {
   margin-bottom: 10px;
 }
 
-/* BOX DESCRIPTION */
+/* box descriptions */
 .box-desc {
   font-size: 0.85rem;
   color: #aaa;
@@ -1298,7 +1300,7 @@ section {
   margin-bottom: 15px;
 }
 
-/* BOX PERKS LIST */
+/* box perks list */
 .box-perks {
   list-style: none;
   text-align: left;
@@ -1317,7 +1319,7 @@ section {
   border-bottom: none;
 }
 
-/* BOX PRICE */
+/* box price */
 .box-price {
   font-size: 1.8rem;
   font-weight: 700;
@@ -1325,7 +1327,7 @@ section {
   margin-bottom: 20px;
 }
 
-/* BOX BUTTON */
+/* box button */
 .box-btn {
   width: 100%;
   background: linear-gradient(135deg, #674846, #c8a97e);
@@ -1352,19 +1354,19 @@ section {
   transform: scale(0.97);
 }
 
-/* POPULAR BUTTON */
+/* popular button */
 .popular-btn {
   background: linear-gradient(135deg, #c8a97e, #674846);
 }
 
-/* ================= HOW IT WORKS SECTION ================= */
+/* ================= how it works section ================= */
 .how-section {
   padding: 80px 20px;
   background: #fff3cd;
   text-align: center;
 }
 
-/* ================= CART BANNER ================= */
+/* ================= cart banner ================= */
 .cart-banner {
   background: linear-gradient(135deg, #674846, #c8a97e);
   padding: 80px 20px;
@@ -1407,7 +1409,7 @@ section {
   margin-top: 8px;
 }
 
-/* ================= CART SECTION ================= */
+/* ================= cart section ================= */
 .cart-section {
   padding: 60px 20px;
   background: #fff8dc;
@@ -1422,7 +1424,7 @@ section {
   margin: 0 auto;
 }
 
-/* ================= CART LEFT ================= */
+/* ================= cart iterms (left) ================= */
 .cart-left {
   flex: 1.5;
   background: white;
@@ -1443,7 +1445,7 @@ section {
   background: linear-gradient(to right, #674846, #c8a97e);
 }
 
-/* CART HEADER */
+/* cart header */
 .cart-header {
   display: flex;
   justify-content: space-between;
@@ -1457,7 +1459,7 @@ section {
   font-weight: 700;
 }
 
-/* CLEAR CART BUTTON */
+/* clear cart button */
 .clear-cart-btn {
   background: transparent;
   border: 2px solid #e74c3c;
@@ -1477,7 +1479,7 @@ section {
   transform: translateY(-2px);
 }
 
-/* ================= CART ITEM ================= */
+/* ================= cart item section ================= */
 .cart-item {
   display: flex;
   align-items: center;
@@ -1522,7 +1524,7 @@ section {
   text-align: right;
 }
 
-/* REMOVE BUTTON */
+/* remove button */
 .remove-btn {
   background: transparent;
   border: none;
@@ -1538,8 +1540,291 @@ section {
   color: #c0392b;
 }
 
-/* ================= EMPTY CART ================= */
+/* ================= empty cart section ================= */
 .empty-cart {
   text-align: center;
   padding: 50px 20px;
+}
+
+/* =======================footer section */
+.footer {
+  background: #1a1a1a;
+  color: #ccc;
+  padding: 50px 20px 20px;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  max-width: 1100px;
+  margin: 0 auto 30px;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 150px;
+}
+
+.footer-section h3 {
+  color: #c8a97e;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  letter-spacing: 0.5px;
+}
+
+.footer-section a {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: #c8a97e;
+}
+
+.footer-section p {
+  font-size: 0.88rem;
+  color: #aaa;
+  line-height: 1.6;
+}
+
+/* social icons */
+.socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 5px;
+}
+
+.socials a {
+  width: 38px;
+  height: 38px;
+  background: #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c8a97e;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.socials a:hover {
+  background: #c8a97e;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(200, 169, 126, 0.4);
+}
+
+/* footer divider */
+.footer-divider {
+  border: none;
+  border-top: 1px solid #333;
+  margin: 20px auto;
+  max-width: 1100px;
+}
+
+/* ================= footer bottom ================= */
+.footer-bottom {
+  text-align: center;
+  font-size: 0.82rem;
+  color: #666;
+  padding-top: 10px;
+}
+
+.footer-bottom span {
+  color: #c8a97e;
+  font-weight: 600;
+}
+
+/* ================= contact banner ================= */
+.contact-banner {
+  background: linear-gradient(135deg, #674846, #c8a97e);
+  padding: 80px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-banner::before {
+  content: "💬";
+  position: absolute;
+  font-size: 10rem;
+  opacity: 0.07;
+  top: -20px;
+  left: -20px;
+  pointer-events: none;
+}
+
+.contact-banner::after {
+  content: "💬";
+  position: absolute;
+  font-size: 10rem;
+  opacity: 0.07;
+  bottom: -20px;
+  right: -20px;
+  pointer-events: none;
+}
+
+.contact-banner-text h1 {
+  font-size: 2.8rem;
+  color: white;
+  font-weight: 700;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  letter-spacing: 2px;
+}
+
+.contact-banner-text p {
+  color: #ffe4b5;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+/* ================= contact section ================= */
+.contact-section {
+  padding: 80px 20px;
+  background: #fff8dc;
+}
+
+/* center box */
+.contact-center {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 24px;
+  padding: 45px 40px;
+  box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.contact-center::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, #674846, #c8a97e);
+}
+
+.contact-center h2 {
+  font-size: 1.8rem;
+  color: #674846;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.contact-intro {
+  color: #888;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin-bottom: 35px;
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ================= information cards grid ================= */
+.info-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-bottom: 35px;
+  text-align: left;
+}
+
+/* information card */
+.info-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  background: #fff8dc;
+  border-radius: 16px;
+  border: 1px solid #f0e6d3;
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(103, 72, 70, 0.12);
+  border-color: #c8a97e;
+}
+
+.info-icon {
+  font-size: 1.6rem;
+  min-width: 40px;
+  text-align: center;
+}
+
+.info-text h4 {
+  font-size: 0.9rem;
+  color: #674846;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.info-text p {
+  font-size: 0.83rem;
+  color: #888;
+  line-height: 1.5;
+}
+
+.info-text a {
+  font-size: 0.83rem;
+  color: #888;
+  text-decoration: none;
+  transition: color 0.3s;
+  line-height: 1.5;
+  display: inline-block;
+}
+
+.info-text a:hover {
+  color: #c8a97e;
+}
+
+/* ================= contact socials section ================= */
+.contact-socials {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.contact-socials a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #888 !important;
+  font-size: 0.83rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.contact-socials a i {
+  width: 28px;
+  height: 28px;
+  background: #674846;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+.nav-logo-img {
+  height: 55px;        /* adjust size */
+  width: auto;
+  vertical-align: middle;
+  margin-right: 10px;   /* space between logo and text */
 }
