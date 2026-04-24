@@ -8,7 +8,7 @@ function updateCartCount() {
   });
 }
 
-// runs ever load ng page
+// para pag every load ng page nag u-update
 updateCartCount();
 
 // ================= notification =================
