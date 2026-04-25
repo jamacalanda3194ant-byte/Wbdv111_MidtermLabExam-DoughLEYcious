@@ -1761,6 +1761,14 @@ section {
   margin-right: auto;
 }
 
+.contact-cta {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 /* ================= information cards grid ================= */
 .info-cards-grid {
   display: grid;
