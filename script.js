@@ -1,3 +1,4 @@
+
 // ================= cart counter =================
 function updateCartCount() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -302,11 +303,7 @@ function checkout() {
   }
 
   // show modal
-  const modal = document.getElementById("checkout-modal");
-  if (modal) {
-    modal.classList.add("active");
-    document.body.style.overflow = "hidden";
-  }
+  window.location.href = "form.html";
 }
 
 // ================= close checkout modal =================

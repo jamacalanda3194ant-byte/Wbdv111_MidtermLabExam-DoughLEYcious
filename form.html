@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Dough LEYcious</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/logo.png">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="nav-logo">
+                <img src="images/logo.png" alt="Dough LEYcious Logo" class="nav-logo-img">
+                <span>Dough LEYcious</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="cart.html">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ================= MAIN CHECKOUT PAGE ================= -->
+    <main class="checkout-page">
+
+        <!-- page header -->
+        <section class="checkout-header">
+            <h1>🍪 Checkout</h1>
+            <p>Review your order and complete your purchase</p>
+        </section>
+
+        <!-- cart summary section -->
+        <section class="checkout-content">
+            <div class="checkout-grid">
+
+                <!-- order summary -->
+                <div class="order-summary-card">
+                    <h2>📋 Order Summary</h2>
+                    <div id="checkout-items">
+                        <div class="empty-cart-message" id="empty-cart-msg">
+                            <div class="empty-icon">🛒</div>
+                            <h3>Your cart is empty</h3>
+                            <p>Add some delicious cookies before checking out!</p>
+                            <a href="shop.html" class="shop-now-btn">Browse Shop</a>
+                        </div>
+                    </div>
+
+                    <div class="order-totals" id="order-totals" style="display:none;">
+                        <div class="total-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">₱0.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Delivery Fee</span>
+                            <span id="delivery-fee">₱50.00</span>
+                        </div>
+                        <div class="total-row total-final">
+                            <span>Total</span>
+                            <span id="order-total">₱0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- payment info -->
+                <div class="payment-info-card">
+                    <h2>💳 Payment Information</h2>
+
+                    <div class="payment-methods">
+                        <h3>Send payment to:</h3>
+                        <div class="payment-option">
+                            <div class="payment-icon">📱</div>
+                            <div class="payment-details">
+                                <strong>Paymaya</strong>
+                                <p>0912-345-6789</p>
+                                <p class="payment-name">Dough LEYcious</p>
+                            </div>
+                        </div>
+                        <div class="payment-option">
+                            <div class="payment-icon">🏦</div>
+                            <div class="payment-details">
+                                <strong>Bank Transfer</strong>
+                                <p>1234-5678-9012</p>
+                                <p class="payment-name">Dough LEYcious Bakeshop</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-reminder">
+                        <p>⚠️ Please send the exact amount and keep your receipt/screenshot for proof of payment.</p>
+                    </div>
+
+                    <button class="proceed-checkout-btn" id="proceed-btn" onclick="openCheckoutModal()" disabled>
+                        🍪 Proceed to Checkout
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= CHECKOUT MODAL(para sa fill up form) ================= -->
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="checkout-modal">
+            <button class="modal-close" onclick="closeCheckoutModal()">&times;</button>
+
+            <div class="modal-header">
+                <div class="modal-icon">🍪</div>
+                <h2>Complete Your Order</h2>
+                <p>Fill in your delivery details below</p>
+            </div>
+
+            <!-- order summary in modal -->
+            <div class="modal-summary" id="modal-summary">
+                
+            </div>
+
+            <!-- checkout form -->
+            <form id="checkout-form" onsubmit="submitOrder(event)">
+
+                <div class="form-group">
+                    <label>Full Name <span class="required">*</span></label>
+                    <input type="text" id="checkout-name" placeholder="e.g. Arvic Pelinta" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="checkout-phone" placeholder="e.g. 09123456789" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Delivery Address <span class="required">*</span></label>
+                    <textarea id="checkout-address" placeholder="Complete address (street, barangay, city)" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Delivery Date <span class="required">*</span></label>
+                        <input type="date" id="checkout-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Delivery Time <span class="required">*</span></label>
+                        <input type="time" id="checkout-time" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Proof of Payment <span class="required">*</span></label>
+                    <div class="file-upload-wrapper">
+                        <label class="file-upload-label" for="checkout-proof">
+                            <span class="upload-icon">📎</span>
+                            <span class="upload-text">Click to upload screenshot</span>
+                            <span class="upload-hint">JPG, PNG or PDF (max 5MB)</span>
+                        </label>
+                        <input type="file" id="checkout-proof" accept="image/*,.pdf" required onchange="showFileName(this)">
+                    </div>
+                    <div class="file-name" id="file-name-display"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Special Instructions (Optional)</label>
+                    <textarea id="checkout-notes" placeholder="Any special requests or notes..."></textarea>
+                </div>
+
+                <button type="submit" class="checkout-submit-btn">
+                    🍪 Place Order
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= SUCCESS MODAL ================= -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="success-modal">
+            <div class="success-icon">✅</div>
+            <h2>Order Placed Successfully!</h2>
+            <p>Thank you for your order! We'll confirm your order shortly via SMS/call.</p>
+            <div class="success-details" id="success-details">
+      
+            </div>
+            <div class="success-buttons">
+                <a href="shop.html" class="success-btn shop-more">Continue Shopping</a>
+                <a href="index.html" class="success-btn go-home">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+  <div class="footer-content">
+
+    <div class="footer-section">
+      <h3>Find Us</h3>
+      <div class="socials">
+        <a href="https://www.facebook.com/profile.php?id=61567054065532" 
+           aria-label="Visit our Facebook page">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/dough_leycious/" 
+           aria-label="Visit our Instagram page">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
+          <a href="shop.html">Shop</a>
+        <a href="aboutus.html">About Us</a>
+    </div>
+
+    <div class="footer-section">
+      <h3>Contact</h3>
+      <p>📧 <a href="mailto:k.munsayac1109@gmail.com">k.munsayac1109@gmail.com</a></p>
+      <p>📍 Available for delivery</p>
+    </div>
+
+  </div>
+
+        <hr class="footer-divider">
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Dough LEYcious. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

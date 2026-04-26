@@ -219,29 +219,7 @@
 </footer>
 
 <script src="script.js"></script>
-<script>
-  // ================= for clearing cart =================
-  function clearCart() {
-    if (confirm("Are you sure you want to clear your cart?")) {
-      localStorage.removeItem("cart");
-      updateCartDisplay();
-      updateCartCount();
-    }
-  }
 
-  // ================= checkout button =================
-  function checkout() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    if (cart.length === 0) {
-      alert("Your cart is empty! Add some cookies first 🍪");
-      return;
-    }
-    alert("Thank you for your order! 🍪 We will contact you shortly.");
-    localStorage.removeItem("cart");
-    updateCartDisplay();
-    updateCartCount();
-  }
-</script>
 
 </body>
 </html>
