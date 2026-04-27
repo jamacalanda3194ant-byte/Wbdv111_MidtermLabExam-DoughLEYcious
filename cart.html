@@ -25,8 +25,7 @@
   <div class="navbar-inner">
     <a href="index.html" class="nav-logo">
   <img src="images/logo.png" alt="Dough LEYcious Logo" class="nav-logo-img">
-  <span>Dough LEYcious</span>
-    </a>
+</a>
     
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
@@ -85,8 +84,8 @@
         <!-- ================= order details ================= -->
         <div class="cart-right">
           <div class="cart-summary-box">
-            <h2>Order Details</h2>
-            <div class="divider"></div>
+              <h2>Order Details</h2>
+                <div class="divider"></div>
 
             <div class="summary-row">
               <span>Subtotal</span>
@@ -131,43 +130,55 @@
   <!-- ================= you might also like section(below cart) ================= -->
   <section class="also-like-section">
     <div class="container">
-      <h2 class="section-title">You Might Also Like 🍪</h2>
-      <div class="divider"></div>
-      <div class="also-like-grid">
+      <h2 class="section-title">Our Other Products 🍪</h2>
+        <div class="divider"></div>
+          <div class="also-like-grid">
 
         <div class="also-like-card">
-          <img src="images/choco chip.jpg" 
-               alt="Classic Choco Chip" 
+          <img src="images/chocolate cake cookie.jpg" 
+               alt="Chocolate Cake Cookie" 
                loading="lazy">
-          <h3>Classic Choco Chip</h3>
-          <p class="price">₱119</p>
+          <h3>Chocolate Cake Cookie</h3>
+          <p class="price">₱219</p>
           <button class="also-like-btn" 
-                  onclick="location.href='shop.html'">
-            Add to Cart
+                  onclick="quickAddToCart('Chocolate Cake Cookie', 219, 'images/chocolate cake cookie.jpg')">
+            Add to Cart 🛒
           </button>
         </div>
 
         <div class="also-like-card">
-          <img src="images/oatmeal choco.jpg" 
-               alt="Oatmeal Choco Chip" 
+          <img src="images/chocolate chip cake.jpg" 
+               alt="Chocolate Chip Cake" 
                loading="lazy">
-          <h3>Oatmeal Choco Chip</h3>
-          <p class="price">₱139</p>
+          <h3>Chocolate Chip Cake</h3>
+          <p class="price">₱200</p>
           <button class="also-like-btn" 
-                  onclick="location.href='shop.html'">
-            Add to Cart
+                  onclick="quickAddToCart('Chocolate Chip Cake', 200, 'images/chocolate chip cake.jpg')">
+            Add to Cart 🛒
           </button>
         </div>
 
         <div class="also-like-card">
-          <img src="images/oreo.jpg" 
-               alt="Oreo Crumbl" 
+          <img src="images/cheese bread.jpg" 
+               alt="Cheese Bread" 
                loading="lazy">
-          <h3>Oreo Crumbl</h3>
+          <h3>Cheese Bread</h3>
+          <p class="price">₱99</p>
+          <button class="also-like-btn" 
+                  onclick="quickAddToCart('Cheese Bread', 99, 'images/cheese bread.jpg')">
+            Add to Cart 🛒
+          </button>
+        </div>
+
+        <div class="also-like-card">
+          <img src="images/dark chocolate cookie.jpg" 
+               alt="Dark Chocolate Cookie" 
+               loading="lazy">
+          <h3>Dark Chocolate Cookie</h3>
           <p class="price">₱119</p>
           <button class="also-like-btn" 
-                  onclick="location.href='shop.html'">
-            Add to Cart
+                  onclick="quickAddToCart('Dark Chocolate Cookie', 119, 'images/dark chocolate cookie.jpg')">
+            Add to Cart 🛒
           </button>
         </div>
 
@@ -203,11 +214,11 @@
     </div>
 
     <div class="footer-section">
-    <h3>Contact</h3>
-    <p>📧 <a href="mailto:k.munsayac1109@gmail.com">k.munsayac1109@gmail.com</a></p>
-    <p>📍 Available for delivery</p>
-    <a href="contact.html" class="contact-page-link">💬 Send us a message</a>
-</div>
+      <h3>Contact</h3>
+      <p>📧 <a href="mailto:k.munsayac1109@gmail.com">k.munsayac1109@gmail.com</a></p>
+      <p>📍 Available for delivery</p>
+      <a href="contact.html" class="contact-page-link">💬 Send us a message</a>
+    </div>
 
   </div>
 
@@ -219,7 +230,6 @@
 </footer>
 
 <script src="script.js"></script>
-
 
 </body>
 </html>

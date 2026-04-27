@@ -1,4 +1,3 @@
-
 // ================= cart counter =================
 function updateCartCount() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -30,6 +29,29 @@ function showToast(message) {
   setTimeout(() => {
     toast.classList.remove("show");
   }, 3000);
+}
+
+// ================= quick add to cart (for recommendation cards) =================
+function quickAddToCart(name, price, imgSrc) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let existing = cart.find(item => item.name === name);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ name, price, qty: 1, imgSrc });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartCount();
+  displayCart();
+  showToast(`✅ ${name} added to cart!`);
+
+  // smooth scroll to cart section so user sees the update
+  const cartSection = document.querySelector(".cart-section");
+  if (cartSection) {
+    cartSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
 // ================= shop page and add to cart =================
@@ -214,7 +236,7 @@ function decreaseQty(index) {
   if (cart[index].qty > 1) {
     cart[index].qty -= 1;
   } else {
-    // mawawala yung item pag nag reach ng o
+    // mawawala yung item pag nag reach ng 0
     cart.splice(index, 1);
     showToast("🗑️ Item removed from cart!");
   }
@@ -254,7 +276,7 @@ function clearCart() {
   }
 }
 
-// ================= checkout button =================
+// ================= checkout button (cart page) =================
 function checkout() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -263,7 +285,87 @@ function checkout() {
     return;
   }
 
-  // fill order summary in modal
+  // redirect to form page - cart data stays in localStorage
+  window.location.href = "form.html";
+}
+
+// ================= CHECKOUT PAGE FUNCTIONS (form.html) =================
+
+// load cart items into checkout page
+function displayCheckoutItems() {
+  const checkoutContainer = document.getElementById("checkout-items");
+  const orderTotals = document.getElementById("order-totals");
+  const proceedBtn = document.getElementById("proceed-btn");
+  const emptyMsg = document.getElementById("empty-cart-msg");
+
+  // only run on checkout/form page
+  if (!checkoutContainer) return;
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // empty cart
+  if (cart.length === 0) {
+    if (emptyMsg) emptyMsg.style.display = "block";
+    if (orderTotals) orderTotals.style.display = "none";
+    if (proceedBtn) proceedBtn.disabled = true;
+    return;
+  }
+
+  // hide empty message, show totals, enable button
+  if (emptyMsg) emptyMsg.style.display = "none";
+  if (orderTotals) orderTotals.style.display = "block";
+  if (proceedBtn) proceedBtn.disabled = false;
+
+  // build items HTML
+  let subtotal = 0;
+  let itemsHTML = "";
+
+  cart.forEach((item) => {
+    let itemTotal = item.price * item.qty;
+    subtotal += itemTotal;
+
+    itemsHTML += `
+      <div class="checkout-item">
+        <img src="${item.imgSrc || 'images/choco chip.jpg'}" 
+             alt="${item.name}"
+             class="checkout-item-img"
+             onerror="this.src='images/choco chip.jpg'">
+        <div class="checkout-item-info">
+          <h4>${item.name}</h4>
+          <p>₱${item.price.toFixed(2)} × ${item.qty}</p>
+        </div>
+        <div class="checkout-item-total">
+          <span>₱${itemTotal.toFixed(2)}</span>
+        </div>
+      </div>
+    `;
+  });
+
+  checkoutContainer.innerHTML = itemsHTML;
+
+  // update totals
+  let deliveryFee = 50;
+  let total = subtotal + deliveryFee;
+
+  const subtotalEl = document.getElementById("subtotal");
+  const deliveryEl = document.getElementById("delivery-fee");
+  const totalEl = document.getElementById("order-total");
+
+  if (subtotalEl) subtotalEl.textContent = "₱" + subtotal.toFixed(2);
+  if (deliveryEl) deliveryEl.textContent = "₱" + deliveryFee.toFixed(2);
+  if (totalEl) totalEl.textContent = "₱" + total.toFixed(2);
+}
+
+// ================= OPEN CHECKOUT MODAL (form.html) =================
+function openCheckoutModal() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  if (cart.length === 0) {
+    showToast("⚠️ Your cart is empty! Add some cookies first 🍪");
+    return;
+  }
+
+  // fill modal order summary
   let subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   let deliveryFee = 50;
   let total = subtotal + deliveryFee;
@@ -275,7 +377,7 @@ function checkout() {
     cart.forEach(item => {
       summaryHTML += `
         <div class="modal-summary-item">
-          <span>${item.name} x${item.qty}</span>
+          <span>${item.name} × ${item.qty}</span>
           <span>₱${(item.price * item.qty).toFixed(2)}</span>
         </div>
       `;
@@ -287,8 +389,8 @@ function checkout() {
         <span>₱${deliveryFee.toFixed(2)}</span>
       </div>
       <div class="modal-summary-total">
-        <span>Total</span>
-        <span>₱${total.toFixed(2)}</span>
+        <span><strong>Total</strong></span>
+        <span><strong>₱${total.toFixed(2)}</strong></span>
       </div>
     `;
 
@@ -303,7 +405,11 @@ function checkout() {
   }
 
   // show modal
-  window.location.href = "form.html";
+  const modal = document.getElementById("checkout-modal");
+  if (modal) {
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
 }
 
 // ================= close checkout modal =================
@@ -315,20 +421,14 @@ function closeCheckoutModal() {
   }
 }
 
-// ================= close modal when clicking overlay =================
-document.addEventListener("click", function(e) {
-  const modal = document.getElementById("checkout-modal");
-  if (e.target === modal) {
-    closeCheckoutModal();
+// ================= close success modal =================
+function closeSuccessModal() {
+  const modal = document.getElementById("success-modal");
+  if (modal) {
+    modal.classList.remove("active");
+    document.body.style.overflow = "auto";
   }
-});
-
-// ================= close modal with ESC key =================
-document.addEventListener("keydown", function(e) {
-  if (e.key === "Escape") {
-    closeCheckoutModal();
-  }
-});
+}
 
 // ================= show file name =================
 function showFileName(input) {
@@ -349,49 +449,70 @@ function submitOrder(event) {
   const date = document.getElementById("checkout-date").value;
   const time = document.getElementById("checkout-time").value;
   const proof = document.getElementById("checkout-proof").files[0];
+  const notes = document.getElementById("checkout-notes")
+    ? document.getElementById("checkout-notes").value.trim()
+    : "";
 
-  // validate all fields
+  // validate all required fields
   if (!name || !phone || !address || !date || !time || !proof) {
-    showToast("⚠️ Please fill in all fields!");
+    showToast("⚠️ Please fill in all required fields!");
     return;
   }
 
-  // validate phone number
-  if (phone.length < 11) {
-    showToast("⚠️ Please enter a valid phone number!");
+  // validate phone number (at least 11 digits)
+  const phoneClean = phone.replace(/\D/g, "");
+  if (phoneClean.length < 11) {
+    showToast("⚠️ Please enter a valid phone number (11 digits)!");
     return;
   }
 
   // get cart for summary
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   let subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  let total = subtotal + 50;
+  let deliveryFee = 50;
+  let total = subtotal + deliveryFee;
 
-  // close modal
+  // close checkout modal
   closeCheckoutModal();
+
+  // build success details
+  const successDetails = document.getElementById("success-details");
+  if (successDetails) {
+    let detailsHTML = `
+      <div class="success-info">
+        <p><strong>👤 Name:</strong> ${name}</p>
+        <p><strong>📱 Phone:</strong> ${phone}</p>
+        <p><strong>📍 Address:</strong> ${address}</p>
+        <p><strong>📅 Delivery:</strong> ${date} at ${time}</p>
+        <p><strong>💰 Total:</strong> ₱${total.toFixed(2)}</p>
+        ${notes ? `<p><strong>📝 Notes:</strong> ${notes}</p>` : ""}
+      </div>
+      <div class="success-items">
+        <h4>Items Ordered:</h4>
+    `;
+
+    cart.forEach(item => {
+      detailsHTML += `
+        <p>${item.name} × ${item.qty} — ₱${(item.price * item.qty).toFixed(2)}</p>
+      `;
+    });
+
+    detailsHTML += `</div>`;
+    successDetails.innerHTML = detailsHTML;
+  }
+
+  // show success modal
+  const successModal = document.getElementById("success-modal");
+  if (successModal) {
+    successModal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
 
   // clear cart
   localStorage.removeItem("cart");
   updateCartCount();
-  displayCart();
 
-  // show success toast
   showToast("✅ Order placed successfully! 🍪");
-
-  // show thank you message after delay
-  setTimeout(() => {
-    alert(
-      `🍪 Thank you for ordering from Dough LEYcious!\n\n` +
-      `📋 Order Details:\n` +
-      `👤 Name: ${name}\n` +
-      `📱 Phone: ${phone}\n` +
-      `📍 Address: ${address}\n` +
-      `📅 Delivery: ${date} at ${time}\n` +
-      `💰 Total: ₱${total.toFixed(2)}\n\n` +
-      `We will contact you shortly. 💛`
-    );
-    window.location.href = "index.html";
-  }, 1500);
 }
 
 // ================= total =================
@@ -400,8 +521,32 @@ function getTotal() {
   return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 }
 
+// ================= MODAL EVENT LISTENERS =================
+
+// close modals when clicking overlay
+document.addEventListener("click", function (e) {
+  const checkoutModal = document.getElementById("checkout-modal");
+  const successModal = document.getElementById("success-modal");
+
+  if (e.target === checkoutModal) {
+    closeCheckoutModal();
+  }
+  if (e.target === successModal) {
+    closeSuccessModal();
+  }
+});
+
+// close modals with ESC key
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") {
+    closeCheckoutModal();
+    closeSuccessModal();
+  }
+});
+
 // ================= run page pag nireload =================
 document.addEventListener("DOMContentLoaded", () => {
   updateCartCount();
   displayCart();
+  displayCheckoutItems(); // loads cart items on form.html
 });
