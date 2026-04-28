@@ -31,6 +31,55 @@ function showToast(message) {
   }, 3000);
 }
 
+// ================= confirmation toast =================
+function showConfirmToast(message, onConfirm) {
+  // remove existing confirm toast if any
+  const existing = document.getElementById("confirm-toast");
+  if (existing) existing.remove();
+
+  const overlay = document.createElement("div");
+  overlay.id = "confirm-toast";
+  overlay.className = "confirm-toast-overlay";
+
+  overlay.innerHTML = `
+    <div class="confirm-toast-box">
+      <p class="confirm-toast-message">🗑️ ${message}</p>
+      <div class="confirm-toast-buttons">
+        <button class="confirm-btn confirm-yes" id="confirm-yes">Yes, clear it</button>
+        <button class="confirm-btn confirm-no" id="confirm-no">Cancel</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  // force reflow then add active class for animation
+  requestAnimationFrame(() => {
+    overlay.classList.add("active");
+  });
+
+  // yes button
+  document.getElementById("confirm-yes").addEventListener("click", () => {
+    overlay.classList.remove("active");
+    setTimeout(() => overlay.remove(), 300);
+    onConfirm();
+  });
+
+  // no / cancel button
+  document.getElementById("confirm-no").addEventListener("click", () => {
+    overlay.classList.remove("active");
+    setTimeout(() => overlay.remove(), 300);
+  });
+
+  // close when clicking overlay background
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      overlay.classList.remove("active");
+      setTimeout(() => overlay.remove(), 300);
+    }
+  });
+}
+
 // ================= quick add to cart (for recommendation cards) =================
 function quickAddToCart(name, price, imgSrc) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -266,14 +315,15 @@ function clearCart() {
     return;
   }
 
-  if (confirm("Are you sure you want to clear your cart?")) {
+  // show confirmation toast instead of browser confirm()
+  showConfirmToast("Are you sure you want to clear your cart?", () => {
     localStorage.removeItem("cart");
     showToast("🗑️ Cart cleared!");
 
     setTimeout(() => {
       location.reload();
     }, 1000);
-  }
+  });
 }
 
 // ================= checkout button (cart page) =================
