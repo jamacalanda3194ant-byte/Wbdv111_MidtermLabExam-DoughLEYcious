@@ -3,78 +3,56 @@ function updateCartCount() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   let total = cart.reduce((sum, item) => sum + item.qty, 0);
   const counters = document.querySelectorAll("#cart-count");
-  counters.forEach(counter => {
+  counters.forEach((counter) => {
     counter.textContent = total;
   });
 }
 
-// -------------------- para pag every load ng page nag u-update --------------------
-updateCartCount();
+// ================= Open ingredient modal =================
+function openIngredientModal(card) {
+  const modal = document.getElementById("ingredientModal");
+  if (!modal) return;
 
-// Open ingredient modal
-  function openIngredientModal(card) {
-    const modal = document.getElementById('ingredientModal');
-    const name = card.getAttribute('data-name');
-    const tagline = card.getAttribute('data-tagline');
-    const price = card.getAttribute('data-price');
-    const img = card.getAttribute('data-img');
-    const description = card.getAttribute('data-description');
-    const ingredients = card.getAttribute('data-ingredients').split(',');
-    const allergens = card.getAttribute('data-allergens');
+  const name = card.getAttribute("data-name");
+  const tagline = card.getAttribute("data-tagline");
+  const price = card.getAttribute("data-price");
+  const img = card.getAttribute("data-img");
+  const description = card.getAttribute("data-description");
+  const ingredients = card.getAttribute("data-ingredients").split(",");
+  const allergens = card.getAttribute("data-allergens");
 
-    // Populate modal
-    document.getElementById('modalImg').src = img;
-    document.getElementById('modalImg').alt = name;
-    document.getElementById('modalName').textContent = name;
-    document.getElementById('modalTagline').textContent = tagline;
-    document.getElementById('modalPrice').textContent = price;
-    document.getElementById('modalDescription').textContent = description;
-    document.getElementById('modalAllergenText').textContent = allergens;
+  document.getElementById("modalImg").src = img;
+  document.getElementById("modalImg").alt = name;
+  document.getElementById("modalName").textContent = name;
+  document.getElementById("modalTagline").textContent = tagline;
+  document.getElementById("modalPrice").textContent = price;
+  document.getElementById("modalDescription").textContent = description;
+  document.getElementById("modalAllergenText").textContent = allergens;
 
-    // Build ingredients list
-    const list = document.getElementById('modalIngredients');
-    list.innerHTML = '';
-    ingredients.forEach(item => {
-      const li = document.createElement('li');
-      li.textContent = item.trim();
-      list.appendChild(li);
-    });
-
-    // Show modal
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  // Close ingredient modal
-  function closeIngredientModal() {
-    const modal = document.getElementById('ingredientModal');
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  // Close modal when clicking overlay
-  document.getElementById('ingredientModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-      closeIngredientModal();
-    }
+  const list = document.getElementById("modalIngredients");
+  list.innerHTML = "";
+  ingredients.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = item.trim();
+    list.appendChild(li);
   });
 
-  // Close modal with Escape key
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeIngredientModal();
-    }
-  });
+  modal.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
 
-
-  // Run on page load
-  updateCartCount();
+// ================= Close ingredient modal =================
+function closeIngredientModal() {
+  const modal = document.getElementById("ingredientModal");
+  if (!modal) return;
+  modal.classList.remove("active");
+  document.body.style.overflow = "";
+}
 
 // ================= notification =================
 function showToast(message) {
   let toast = document.getElementById("toast");
 
-  // -------------------- nag c-create ng toast notif pag di nag e-exist order --------------------
   if (!toast) {
     toast = document.createElement("div");
     toast.id = "toast";
@@ -92,7 +70,6 @@ function showToast(message) {
 
 // ================= confirmation toast =================
 function showConfirmToast(message, onConfirm) {
-  // remove existing confirm toast if any
   const existing = document.getElementById("confirm-toast");
   if (existing) existing.remove();
 
@@ -112,25 +89,22 @@ function showConfirmToast(message, onConfirm) {
 
   document.body.appendChild(overlay);
 
-  // -------------------- force reflow then add active class for animation --------------------
+  // -------------------- force reflow then add active class for animation ------------------
   requestAnimationFrame(() => {
     overlay.classList.add("active");
   });
 
-  // -------------------- yes button --------------------
   document.getElementById("confirm-yes").addEventListener("click", () => {
     overlay.classList.remove("active");
     setTimeout(() => overlay.remove(), 300);
     onConfirm();
   });
 
-  // -------------------- no / cancel button --------------------
   document.getElementById("confirm-no").addEventListener("click", () => {
     overlay.classList.remove("active");
     setTimeout(() => overlay.remove(), 300);
   });
 
-  // -------------------- close when clicking overlay background --------------------
   overlay.addEventListener("click", (e) => {
     if (e.target === overlay) {
       overlay.classList.remove("active");
@@ -142,7 +116,7 @@ function showConfirmToast(message, onConfirm) {
 // ================= quick add to cart (for recommendation cards) =================
 function quickAddToCart(name, price, imgSrc) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  let existing = cart.find(item => item.name === name);
+  let existing = cart.find((item) => item.name === name);
 
   if (existing) {
     existing.qty += 1;
@@ -162,76 +136,6 @@ function quickAddToCart(name, price, imgSrc) {
   }
 }
 
-// ================= shop page and add to cart =================
-const productCards = document.querySelectorAll(".product-card");
-
-if (productCards.length > 0) {
-  productCards.forEach(card => {
-    const input = card.querySelector("input");
-    const plus = card.querySelector(".plus");
-    const minus = card.querySelector(".minus");
-    const addBtn = card.querySelector(".add-to-cart-btn");
-
-    // -------------------- plus button --------------------
-    if (plus) {
-      plus.addEventListener("click", (e) => {
-        e.stopPropagation();
-        input.value = (parseInt(input.value) || 0) + 1;
-      });
-    }
-
-    // -------------------- minus button --------------------
-    if (minus) {
-      minus.addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (parseInt(input.value) > 0) {
-          input.value = parseInt(input.value) - 1;
-        }
-      });
-    }
-
-    // -------------------- add to cart button --------------------
-    if (addBtn) {
-      addBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-
-        let qty = parseInt(input.value);
-
-        if (qty <= 0) {
-          showToast("⚠️ Please select a quantity first!");
-          return;
-        }
-
-        const name = card.querySelector("h3").textContent.trim();
-        const priceText = card.querySelector(".price").textContent;
-        const price = parseFloat(priceText.replace("₱", "").trim());
-
-        // -------------------- img source --------------------
-        const img = card.querySelector("img");
-        const imgSrc = img ? img.src : "";
-
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        let existing = cart.find(item => item.name === name);
-
-        if (existing) {
-          existing.qty += qty;
-        } else {
-          cart.push({ name, price, qty, imgSrc });
-        }
-
-        localStorage.setItem("cart", JSON.stringify(cart));
-        updateCartCount();
-
-        // -------------------- reset input --------------------
-        input.value = 0;
-
-        // -------------------- show notif --------------------
-        showToast(`✅ ${name} added to cart!`);
-      });
-    }
-  });
-}
-
 // ================= order page =================
 function selectOrder(type) {
   localStorage.setItem("orderType", type);
@@ -239,7 +143,7 @@ function selectOrder(type) {
   const messages = {
     "6pcs": "Box of 6 selected! 🍪",
     "8pcs": "Box of 8 selected! 🍪🍪",
-    "12pcs": "Box of 12 selected! 🍪🍪🍪"
+    "12pcs": "Box of 12 selected! 🍪🍪🍪",
   };
 
   showToast(messages[type] || "Order selected!");
@@ -270,7 +174,6 @@ function displayCart() {
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // -------------------- for empty cart --------------------
   if (cart.length === 0) {
     cartContainer.innerHTML = `
       <div class="empty-cart">
@@ -289,7 +192,6 @@ function displayCart() {
     return;
   }
 
-  // -------------------- cart items (display) --------------------
   let subtotal = 0;
   cartContainer.innerHTML = "";
 
@@ -298,7 +200,7 @@ function displayCart() {
 
     cartContainer.innerHTML += `
       <div class="cart-item">
-        <img src="${item.imgSrc || 'images/choco chip.jpg'}" 
+        <img src="${item.imgSrc || "images/choco chip.jpg"}" 
              alt="${item.name}"
              onerror="this.src='images/choco chip.jpg'">
         <div class="cart-item-info">
@@ -319,7 +221,6 @@ function displayCart() {
     `;
   });
 
-  // -------------------- total payment --------------------
   let total = subtotal + deliveryFee;
 
   if (subtotalDisplay) subtotalDisplay.textContent = "₱" + subtotal.toFixed(2);
@@ -343,8 +244,9 @@ function decreaseQty(index) {
 
   if (cart[index].qty > 1) {
     cart[index].qty -= 1;
-  } else {
+    
     // -------------------- mawawala yung item pag nag reach ng 0 --------------------
+  } else {
     cart.splice(index, 1);
     showToast("🗑️ Item removed from cart!");
   }
@@ -374,7 +276,6 @@ function clearCart() {
     return;
   }
 
-  // -------------------- show confirmation toast notification instead na browser(alert) confirm --------------------
   showConfirmToast("Are you sure you want to clear your cart?", () => {
     localStorage.removeItem("cart");
     showToast("🗑️ Cart cleared!");
@@ -399,15 +300,12 @@ function checkout() {
 }
 
 // ================= CHECKOUT PAGE FUNCTIONS (form.html) =================
-
-// -------------------- load cart items into checkout page --------------------
 function displayCheckoutItems() {
   const checkoutContainer = document.getElementById("checkout-items");
   const orderTotals = document.getElementById("order-totals");
   const proceedBtn = document.getElementById("proceed-btn");
   const emptyMsg = document.getElementById("empty-cart-msg");
 
-  // ------------ only run on checkout/form page ------------
   if (!checkoutContainer) return;
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -420,7 +318,6 @@ function displayCheckoutItems() {
     return;
   }
 
-  // ------------ hide empty message, show totals, enable button ------------
   if (emptyMsg) emptyMsg.style.display = "none";
   if (orderTotals) orderTotals.style.display = "block";
   if (proceedBtn) proceedBtn.disabled = false;
@@ -435,7 +332,7 @@ function displayCheckoutItems() {
 
     itemsHTML += `
       <div class="checkout-item">
-        <img src="${item.imgSrc || 'images/choco chip.jpg'}" 
+        <img src="${item.imgSrc || "images/choco chip.jpg"}" 
              alt="${item.name}"
              class="checkout-item-img"
              onerror="this.src='images/choco chip.jpg'">
@@ -452,7 +349,6 @@ function displayCheckoutItems() {
 
   checkoutContainer.innerHTML = itemsHTML;
 
-  // --------------------- update totals ---------------------
   let deliveryFee = 50;
   let total = subtotal + deliveryFee;
 
@@ -483,7 +379,7 @@ function openCheckoutModal() {
   if (summaryContainer) {
     let summaryHTML = `<h4>📋 Order Summary</h4>`;
 
-    cart.forEach(item => {
+    cart.forEach((item) => {
       summaryHTML += `
         <div class="modal-summary-item">
           <span>${item.name} × ${item.qty}</span>
@@ -506,7 +402,6 @@ function openCheckoutModal() {
     summaryContainer.innerHTML = summaryHTML;
   }
 
-  // --------------------- set minimum date to today ---------------------
   const dateInput = document.getElementById("checkout-date");
   if (dateInput) {
     const today = new Date().toISOString().split("T")[0];
@@ -549,8 +444,6 @@ function showFileName(input) {
 }
 
 // ================= INPUT VALIDATION =================
-
-// -------------------- validate name - letters, spaces, and common name characters only --------------------
 function validateName(name) {
   const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s\-'.]+$/;
   return nameRegex.test(name);
@@ -563,7 +456,6 @@ function validatePhone(phone) {
   return phoneRegex.test(phoneClean);
 }
 
-// -------------- check if string contains numbers --------------------
 function containsNumbers(str) {
   return /\d/.test(str);
 }
@@ -587,13 +479,12 @@ function submitOrder(event) {
     ? document.getElementById("checkout-notes").value.trim()
     : "";
 
-  // -------------------- validate all required fields ------------------
+     // -------------------- validate all required fields ------------------
   if (!name || !phone || !address || !date || !time || !proof) {
     showToast("⚠️ Please fill in all required fields!");
     return;
   }
 
-  // -------------------- validate name - no numbers allowed ----------------------------------
   if (containsNumbers(name)) {
     showToast("⚠️ Name should contain letters only, no numbers!");
     document.getElementById("checkout-name").focus();
@@ -606,7 +497,7 @@ function submitOrder(event) {
     return;
   }
 
-  // ------------- validate phone - no letters, exactly 11 digits ------------------
+   // ------------- validate phone - no letters, exactly 11 digits ------------------
   if (containsLetters(phone)) {
     showToast("⚠️ Phone number should contain numbers only!");
     document.getElementById("checkout-phone").focus();
@@ -616,7 +507,9 @@ function submitOrder(event) {
   const phoneClean = phone.replace(/\D/g, "");
 
   if (phoneClean.length !== 11) {
-    showToast(`⚠️ Phone number must be exactly 11 digits! (currently ${phoneClean.length})`);
+    showToast(
+      `⚠️ Phone number must be exactly 11 digits! (currently ${phoneClean.length})`
+    );
     document.getElementById("checkout-phone").focus();
     return;
   }
@@ -633,10 +526,9 @@ function submitOrder(event) {
   let deliveryFee = 50;
   let total = subtotal + deliveryFee;
 
-  // close checkout modal
   closeCheckoutModal();
 
-  // build success details
+   // build success details
   const successDetails = document.getElementById("success-details");
   if (successDetails) {
     let detailsHTML = `
@@ -652,7 +544,7 @@ function submitOrder(event) {
         <h4>Items Ordered:</h4>
     `;
 
-    cart.forEach(item => {
+    cart.forEach((item) => {
       detailsHTML += `
         <p>${item.name} × ${item.qty} — ₱${(item.price * item.qty).toFixed(2)}</p>
       `;
@@ -669,7 +561,7 @@ function submitOrder(event) {
     document.body.style.overflow = "hidden";
   }
 
-  // clear cart
+  // clear cart after order is placed
   localStorage.removeItem("cart");
   updateCartCount();
 
@@ -682,39 +574,114 @@ function getTotal() {
   return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 }
 
-// ================= MODAL EVENT LISTENERS =================
-
-// close modals when clicking overlay
-document.addEventListener("click", function (e) {
-  const checkoutModal = document.getElementById("checkout-modal");
-  const successModal = document.getElementById("success-modal");
-
-  if (e.target === checkoutModal) {
-    closeCheckoutModal();
-  }
-  if (e.target === successModal) {
-    closeSuccessModal();
-  }
-});
-
-// close modals with ESC key
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape") {
-    closeCheckoutModal();
-    closeSuccessModal();
-  }
-});
-
-// ================= para to every reload mo ng page nagr-run everything =================
+// ================= EVERYTHING RUNS ON DOM READY =================
 document.addEventListener("DOMContentLoaded", () => {
+  // ---- update cart count on every page ----
   updateCartCount();
   displayCart();
   displayCheckoutItems();
 
-  // ---- Full Name: block numbers in real-time section ----
+  // ================= ingredient modal listeners (with null check) =================
+  const ingredientModal = document.getElementById("ingredientModal");
+  if (ingredientModal) {
+    ingredientModal.addEventListener("click", function (e) {
+      if (e.target === this) {
+        closeIngredientModal();
+      }
+    });
+  }
+
+  // ================= shop page: product card listeners =================
+  const productCards = document.querySelectorAll(".product-card");
+
+  if (productCards.length > 0) {
+    productCards.forEach((card) => {
+      const input = card.querySelector("input");
+      const plus = card.querySelector(".plus");
+      const minus = card.querySelector(".minus");
+      const addBtn = card.querySelector(".add-to-cart-btn");
+
+      if (plus) {
+        plus.addEventListener("click", (e) => {
+          e.stopPropagation();
+          input.value = (parseInt(input.value) || 0) + 1;
+        });
+      }
+
+      if (minus) {
+        minus.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (parseInt(input.value) > 0) {
+            input.value = parseInt(input.value) - 1;
+          }
+        });
+      }
+
+      if (addBtn) {
+        addBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+
+          let qty = parseInt(input.value);
+
+          if (qty <= 0) {
+            showToast("⚠️ Please select a quantity first!");
+            return;
+          }
+
+          const name = card.querySelector("h3").textContent.trim();
+          const priceText = card.querySelector(".price").textContent;
+          const price = parseFloat(priceText.replace("₱", "").trim());
+
+          const img = card.querySelector("img");
+          const imgSrc = img ? img.src : "";
+
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+          let existing = cart.find((item) => item.name === name);
+
+          if (existing) {
+            existing.qty += qty;
+          } else {
+            cart.push({ name, price, qty, imgSrc });
+          }
+
+          localStorage.setItem("cart", JSON.stringify(cart));
+          updateCartCount();
+
+          input.value = 0;
+
+          showToast(`✅ ${name} added to cart!`);
+        });
+      }
+    });
+  }
+
+  // ================= checkout modal listeners =================
+  document.addEventListener("click", function (e) {
+    const checkoutModal = document.getElementById("checkout-modal");
+    const successModal = document.getElementById("success-modal");
+
+    if (e.target === checkoutModal) {
+      closeCheckoutModal();
+    }
+    if (e.target === successModal) {
+      closeSuccessModal();
+    }
+  });
+
+  // ================= ESC key closes all modals =================
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      closeIngredientModal();
+      closeCheckoutModal();
+      closeSuccessModal();
+    }
+  });
+
+  // ================= Full Name: block numbers in real-time =================
   const nameInput = document.getElementById("checkout-name");
+
+  // pinipigilan niya yung number keys from being typed and show real-time feedback
   if (nameInput) {
-    // pinipigilan niya yung number keys from being typed and show real-time feedback
     nameInput.addEventListener("keypress", function (e) {
       if (/\d/.test(e.key)) {
         e.preventDefault();
@@ -722,7 +689,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // catch paste with numbers
     nameInput.addEventListener("input", function () {
       if (containsNumbers(this.value)) {
         showToast("⚠️ Name should contain letters only, no numbers!");
@@ -731,10 +697,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ---- Phone Number: block letters in real-time section ----
+  // ================= Phone Number: block letters in real-time =================
   const phoneInput = document.getElementById("checkout-phone");
   if (phoneInput) {
-    // pinipigilan niya yung letter keys na ma-type just in case may user na mag t-type ng letters, may real-time feedback
     phoneInput.addEventListener("keypress", function (e) {
       if (/[A-Za-z]/.test(e.key)) {
         e.preventDefault();
@@ -742,7 +707,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // catch paste with letters and enforce max 11 digits
+    // pinipigilan niya yung letter keys na ma-type just in case may user na mag t-type ng letters, may real-time feedback
     phoneInput.addEventListener("input", function () {
       if (containsLetters(this.value)) {
         showToast("⚠️ Phone number should contain numbers only!");
@@ -759,12 +724,12 @@ document.addEventListener("DOMContentLoaded", () => {
         showToast("⚠️ Phone number must be exactly 11 digits!");
       }
     });
-
-    // lumalabas warning pag umaalis sa field if not exactly 11 digits
     phoneInput.addEventListener("blur", function () {
       const digitsOnly = this.value.replace(/\D/g, "");
       if (digitsOnly.length > 0 && digitsOnly.length !== 11) {
-        showToast(`⚠️ Phone number must be exactly 11 digits! (currently ${digitsOnly.length})`);
+        showToast(
+          `⚠️ Phone number must be exactly 11 digits! (currently ${digitsOnly.length})`
+        );
       }
     });
   }
