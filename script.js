@@ -8,14 +8,14 @@ function updateCartCount() {
   });
 }
 
-// para pag every load ng page nag u-update
+// -------------------- para pag every load ng page nag u-update --------------------
 updateCartCount();
 
 // ================= notification =================
 function showToast(message) {
   let toast = document.getElementById("toast");
 
-  // nag c-create ng toast notif pag di nag e-exist order
+  // -------------------- nag c-create ng toast notif pag di nag e-exist order --------------------
   if (!toast) {
     toast = document.createElement("div");
     toast.id = "toast";
@@ -53,25 +53,25 @@ function showConfirmToast(message, onConfirm) {
 
   document.body.appendChild(overlay);
 
-  // force reflow then add active class for animation
+  // -------------------- force reflow then add active class for animation --------------------
   requestAnimationFrame(() => {
     overlay.classList.add("active");
   });
 
-  // yes button
+  // -------------------- yes button --------------------
   document.getElementById("confirm-yes").addEventListener("click", () => {
     overlay.classList.remove("active");
     setTimeout(() => overlay.remove(), 300);
     onConfirm();
   });
 
-  // no / cancel button
+  // -------------------- no / cancel button --------------------
   document.getElementById("confirm-no").addEventListener("click", () => {
     overlay.classList.remove("active");
     setTimeout(() => overlay.remove(), 300);
   });
 
-  // close when clicking overlay background
+  // -------------------- close when clicking overlay background --------------------
   overlay.addEventListener("click", (e) => {
     if (e.target === overlay) {
       overlay.classList.remove("active");
@@ -96,7 +96,7 @@ function quickAddToCart(name, price, imgSrc) {
   displayCart();
   showToast(`✅ ${name} added to cart!`);
 
-  // smooth scroll to cart section so user sees the update
+  // -------------------- smooth scroll to cart section so user sees the update --------------------
   const cartSection = document.querySelector(".cart-section");
   if (cartSection) {
     cartSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -113,7 +113,7 @@ if (productCards.length > 0) {
     const minus = card.querySelector(".minus");
     const addBtn = card.querySelector(".add-to-cart-btn");
 
-    // plus button
+    // -------------------- plus button --------------------
     if (plus) {
       plus.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -121,7 +121,7 @@ if (productCards.length > 0) {
       });
     }
 
-    // minus button
+    // -------------------- minus button --------------------
     if (minus) {
       minus.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -131,7 +131,7 @@ if (productCards.length > 0) {
       });
     }
 
-    // add to cart button
+    // -------------------- add to cart button --------------------
     if (addBtn) {
       addBtn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -147,7 +147,7 @@ if (productCards.length > 0) {
         const priceText = card.querySelector(".price").textContent;
         const price = parseFloat(priceText.replace("₱", "").trim());
 
-        // img source
+        // -------------------- img source --------------------
         const img = card.querySelector("img");
         const imgSrc = img ? img.src : "";
 
@@ -163,10 +163,10 @@ if (productCards.length > 0) {
         localStorage.setItem("cart", JSON.stringify(cart));
         updateCartCount();
 
-        // reset input
+        // -------------------- reset input --------------------
         input.value = 0;
 
-        // show notif
+        // -------------------- show notif --------------------
         showToast(`✅ ${name} added to cart!`);
       });
     }
@@ -206,12 +206,12 @@ function displayCart() {
   const totalDisplay = document.getElementById("total-price");
   const deliveryFee = 50;
 
-  // gumagana lang sa cart page
+  // -------------------- gumagana lang sa cart page --------------------
   if (!cartContainer) return;
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // for empty cart
+  // -------------------- for empty cart --------------------
   if (cart.length === 0) {
     cartContainer.innerHTML = `
       <div class="empty-cart">
@@ -230,7 +230,7 @@ function displayCart() {
     return;
   }
 
-  // cart items (display)
+  // -------------------- cart items (display) --------------------
   let subtotal = 0;
   cartContainer.innerHTML = "";
 
@@ -260,7 +260,7 @@ function displayCart() {
     `;
   });
 
-  // total payment
+  // -------------------- total payment --------------------
   let total = subtotal + deliveryFee;
 
   if (subtotalDisplay) subtotalDisplay.textContent = "₱" + subtotal.toFixed(2);
@@ -285,7 +285,7 @@ function decreaseQty(index) {
   if (cart[index].qty > 1) {
     cart[index].qty -= 1;
   } else {
-    // mawawala yung item pag nag reach ng 0
+    // -------------------- mawawala yung item pag nag reach ng 0 --------------------
     cart.splice(index, 1);
     showToast("🗑️ Item removed from cart!");
   }
@@ -315,7 +315,7 @@ function clearCart() {
     return;
   }
 
-  // show confirmation toast instead of browser confirm()
+  // -------------------- show confirmation toast notification instead na browser(alert) confirm --------------------
   showConfirmToast("Are you sure you want to clear your cart?", () => {
     localStorage.removeItem("cart");
     showToast("🗑️ Cart cleared!");
@@ -335,25 +335,25 @@ function checkout() {
     return;
   }
 
-  // redirect to form page - cart data stays in localStorage
+  // -------------------- redirect to form page - cart data stays in localStorage --------------------
   window.location.href = "form.html";
 }
 
 // ================= CHECKOUT PAGE FUNCTIONS (form.html) =================
 
-// load cart items into checkout page
+// -------------------- load cart items into checkout page --------------------
 function displayCheckoutItems() {
   const checkoutContainer = document.getElementById("checkout-items");
   const orderTotals = document.getElementById("order-totals");
   const proceedBtn = document.getElementById("proceed-btn");
   const emptyMsg = document.getElementById("empty-cart-msg");
 
-  // only run on checkout/form page
+  // ------------ only run on checkout/form page ------------
   if (!checkoutContainer) return;
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // empty cart
+  // ------------ empty cart ------------
   if (cart.length === 0) {
     if (emptyMsg) emptyMsg.style.display = "block";
     if (orderTotals) orderTotals.style.display = "none";
@@ -361,12 +361,12 @@ function displayCheckoutItems() {
     return;
   }
 
-  // hide empty message, show totals, enable button
+  // ------------ hide empty message, show totals, enable button ------------
   if (emptyMsg) emptyMsg.style.display = "none";
   if (orderTotals) orderTotals.style.display = "block";
   if (proceedBtn) proceedBtn.disabled = false;
 
-  // build items HTML
+  // ------------ build items HTML and calculate subtotal ------------
   let subtotal = 0;
   let itemsHTML = "";
 
@@ -393,7 +393,7 @@ function displayCheckoutItems() {
 
   checkoutContainer.innerHTML = itemsHTML;
 
-  // update totals
+  // --------------------- update totals ---------------------
   let deliveryFee = 50;
   let total = subtotal + deliveryFee;
 
@@ -415,7 +415,7 @@ function openCheckoutModal() {
     return;
   }
 
-  // fill modal order summary
+  // --------------------- fill modal order summary ---------------------
   let subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   let deliveryFee = 50;
   let total = subtotal + deliveryFee;
@@ -447,14 +447,14 @@ function openCheckoutModal() {
     summaryContainer.innerHTML = summaryHTML;
   }
 
-  // set minimum date to today
+  // --------------------- set minimum date to today ---------------------
   const dateInput = document.getElementById("checkout-date");
   if (dateInput) {
     const today = new Date().toISOString().split("T")[0];
     dateInput.setAttribute("min", today);
   }
 
-  // show modal
+  // --------------------- show modal ---------------------
   const modal = document.getElementById("checkout-modal");
   if (modal) {
     modal.classList.add("active");
@@ -489,6 +489,31 @@ function showFileName(input) {
   }
 }
 
+// ================= INPUT VALIDATION =================
+
+// -------------------- validate name - letters, spaces, and common name characters only --------------------
+function validateName(name) {
+  const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s\-'.]+$/;
+  return nameRegex.test(name);
+}
+
+// ------------- validate phone - exactly 11 digits, no letters ------------------
+function validatePhone(phone) {
+  const phoneClean = phone.replace(/[\s\-]/g, "");
+  const phoneRegex = /^\d{11}$/;
+  return phoneRegex.test(phoneClean);
+}
+
+// -------------- check if string contains numbers --------------------
+function containsNumbers(str) {
+  return /\d/.test(str);
+}
+
+// -------------- check if string contains letters --------------------
+function containsLetters(str) {
+  return /[A-Za-z]/.test(str);
+}
+
 // ================= submit order =================
 function submitOrder(event) {
   event.preventDefault();
@@ -503,16 +528,43 @@ function submitOrder(event) {
     ? document.getElementById("checkout-notes").value.trim()
     : "";
 
-  // validate all required fields
+  // -------------------- validate all required fields ------------------
   if (!name || !phone || !address || !date || !time || !proof) {
     showToast("⚠️ Please fill in all required fields!");
     return;
   }
 
-  // validate phone number (at least 11 digits)
+  // -------------------- validate name - no numbers allowed ----------------------------------
+  if (containsNumbers(name)) {
+    showToast("⚠️ Name should contain letters only, no numbers!");
+    document.getElementById("checkout-name").focus();
+    return;
+  }
+
+  if (!validateName(name)) {
+    showToast("⚠️ Please enter a valid name (letters only)!");
+    document.getElementById("checkout-name").focus();
+    return;
+  }
+
+  // ------------- validate phone - no letters, exactly 11 digits ------------------
+  if (containsLetters(phone)) {
+    showToast("⚠️ Phone number should contain numbers only!");
+    document.getElementById("checkout-phone").focus();
+    return;
+  }
+
   const phoneClean = phone.replace(/\D/g, "");
-  if (phoneClean.length < 11) {
-    showToast("⚠️ Please enter a valid phone number (11 digits)!");
+
+  if (phoneClean.length !== 11) {
+    showToast(`⚠️ Phone number must be exactly 11 digits! (currently ${phoneClean.length})`);
+    document.getElementById("checkout-phone").focus();
+    return;
+  }
+
+  if (!validatePhone(phone)) {
+    showToast("⚠️ Please enter a valid 11-digit phone number!");
+    document.getElementById("checkout-phone").focus();
     return;
   }
 
@@ -594,9 +646,67 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
-// ================= run page pag nireload =================
+// ================= para to every reload mo ng page nagr-run everything =================
 document.addEventListener("DOMContentLoaded", () => {
   updateCartCount();
   displayCart();
-  displayCheckoutItems(); // loads cart items on form.html
+  displayCheckoutItems();
+
+  // ---- Full Name: block numbers in real-time section ----
+  const nameInput = document.getElementById("checkout-name");
+  if (nameInput) {
+    // pinipigilan niya yung number keys from being typed and show real-time feedback
+    nameInput.addEventListener("keypress", function (e) {
+      if (/\d/.test(e.key)) {
+        e.preventDefault();
+        showToast("⚠️ Name should contain letters only, no numbers!");
+      }
+    });
+
+    // catch paste with numbers
+    nameInput.addEventListener("input", function () {
+      if (containsNumbers(this.value)) {
+        showToast("⚠️ Name should contain letters only, no numbers!");
+        this.value = this.value.replace(/\d/g, "");
+      }
+    });
+  }
+
+  // ---- Phone Number: block letters in real-time section ----
+  const phoneInput = document.getElementById("checkout-phone");
+  if (phoneInput) {
+    // pinipigilan niya yung letter keys na ma-type just in case may user na mag t-type ng letters, may real-time feedback
+    phoneInput.addEventListener("keypress", function (e) {
+      if (/[A-Za-z]/.test(e.key)) {
+        e.preventDefault();
+        showToast("⚠️ Phone number should contain numbers only!");
+      }
+    });
+
+    // catch paste with letters and enforce max 11 digits
+    phoneInput.addEventListener("input", function () {
+      if (containsLetters(this.value)) {
+        showToast("⚠️ Phone number should contain numbers only!");
+        this.value = this.value.replace(/[A-Za-z]/g, "");
+      }
+
+      // tinatanggal niya pag or more like di niya binabasa pag may non-digit characters
+      let digitsOnly = this.value.replace(/\D/g, "");
+
+      // limit to 11 digits max (para hindi lumagpas sa 11 digits kahit walang letters)
+      if (digitsOnly.length > 11) {
+        digitsOnly = digitsOnly.substring(0, 11);
+        this.value = digitsOnly;
+        showToast("⚠️ Phone number must be exactly 11 digits!");
+      }
+    });
+
+    // lumalabas warning pag umaalis sa field if not exactly 11 digits
+    phoneInput.addEventListener("blur", function () {
+      const digitsOnly = this.value.replace(/\D/g, "");
+      if (digitsOnly.length > 0 && digitsOnly.length !== 11) {
+        showToast(`⚠️ Phone number must be exactly 11 digits! (currently ${digitsOnly.length})`);
+      }
+    });
+  }
 });
