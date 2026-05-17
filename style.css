@@ -757,7 +757,7 @@ section {
       right: 20px;
       background: #fff0f0;
       border: none;
-      color: #e74c3c;
+      color: #674846;
       font-size: 1.2rem;
       cursor: pointer;
       width: 36px;
@@ -773,7 +773,7 @@ section {
     .modal-close-btn:hover {
       background: #fde2e2;
       transform: scale(1.1) rotate(90deg);
-      color: #c0392b;
+      color: #674846;
     }
 
     /* ---- Modal Header ---- */
@@ -1166,8 +1166,9 @@ section {
 /* ================= TOAST NOTIFICATION ================= */
 .toast {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 50px;
+  left: 50px;
+  transform: translate(-50%, 20px);
   background: #674846;
   color: white;
   padding: 12px 22px;
@@ -1175,10 +1176,10 @@ section {
   font-size: 0.9rem;
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
   opacity: 0;
-  transform: translateY(20px);
   transition: all 0.4s ease;
   z-index: 9999;
 }
+
 
 .toast.show {
   opacity: 1;
@@ -3189,7 +3190,7 @@ section {
 .divider {
  width: 60px;
  height: 3px;
- background: linear-gradient(90deg, #ff6b35, #f7931e);
+ background: linear-gradient(90deg, #674846, #1b1309);
  margin: 1rem auto 2rem; /* CENTER THE DIVIDER */
  border-radius: 2px;
 }

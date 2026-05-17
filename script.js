@@ -325,9 +325,7 @@ function goToOrderPage() {
 
 // ================= cart page =================
 const deliveryRates = {
-  manila: { base: 50, minOrder: 300 },
-  near: { base: 80, minOrder: 500 },
-  far: { base: 120, minOrder: 800 }
+  ncr: { base: 50, minOrder: 300 },
 };
 
 function displayCart() {
@@ -631,7 +629,7 @@ function openCheckoutModal() {
     dateInput.setAttribute("min", today);
   }
 
-  // ================= DELIVERY FEE AUTO UPDATE (address then total) =================
+  // ================= DELIVERY FEE =================
   const deliveryLocationEl = document.getElementById("delivery-location");
   const deliveryEl = document.getElementById("delivery-fee");
   const orderTotalEl = document.getElementById("order-total");
@@ -648,14 +646,12 @@ function openCheckoutModal() {
 
   // Use same delivery rates as cart page (fallback to ₱50 if missing)
   const resolvedDeliveryFeeFromLocation = (locationValue) => {
-    const location = String(locationValue || "manila").toLowerCase();
+    const location = String(locationValue || "ncr").toLowerCase();
     const rates = {
-      manila: { base: 50, minOrder: 300 },
-      near: { base: 80, minOrder: 500 },
-      far: { base: 120, minOrder: 800 },
+      ncr: { base: 50, minOrder: 300 },
     };
 
-    const chosen = rates[location] || rates.manila;
+    const chosen = rates[location] || rates.ncr;
     
     // free delivery rules (by min order)
     if (baseSubtotal >= chosen.minOrder) return 0;
@@ -761,7 +757,7 @@ function agreeAndProceed() {
   }
 
   closeTermsModal();
-  // After agreement, open the checkout modal normally.
+  // After agreement, open the checkout modal normally
   openCheckoutModal();
 
 }
@@ -788,7 +784,6 @@ function showFileName(input) {
 // ================= INPUT VALIDATION =================
 function validateName(name) {
   // Letters + spaces only (no special characters)
-  // Example allowed: "Arvic Pelinta", "Juan Dela Cruz"
   const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
   return nameRegex.test(name);
 }
@@ -1110,12 +1105,12 @@ function getTotal() {
   // ---- update cart count on every page ----
   updateCartCount();
 
-  // cart page (cart.html)
+  // cart page
   if (document.getElementById("cart-items")) {
     displayCart();
   }
 
-  // checkout/form page (form.html)
+  // checkout/form page
   if (document.getElementById("checkout-items")) {
     displayCheckoutItems();
   }
@@ -1157,7 +1152,7 @@ function getTotal() {
   }
 
 
-  // ================= shop page: product card listeners =================
+  // ================= shop page product card listeners =================
   const productCards = document.querySelectorAll(".product-card");
 
   if (productCards.length > 0) {
@@ -1264,7 +1259,7 @@ function getTotal() {
     }
   });
 
-  // ================= Full Name: block numbers in real-time =================
+  // ================= Full Name block numbers in real-time =================
   const nameInput = document.getElementById("checkout-name");
 
   // pinipigilan niya yung number keys from being typed and show real-time feedback
