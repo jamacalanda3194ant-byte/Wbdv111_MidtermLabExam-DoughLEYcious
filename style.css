@@ -1518,7 +1518,6 @@ section {
 }
 
 .about-story-img {
-  flex: 1;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(103, 72, 70, 0.2);
@@ -1535,10 +1534,6 @@ section {
 
 .about-story-img:hover img {
   transform: scale(1.05);
-}
-
-.about-story-text {
-  flex: 1;
 }
 
 .about-story-text h2 {
@@ -3920,13 +3915,25 @@ section {
 }
 
 @media (max-width: 900px) {
+
   .about-story {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 30px;
+    text-align: center;
+  }
+
+  .about-story-img {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    min-width: unset;
   }
 
   .about-story-img img {
-    height: 250px;
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
   }
 
   .about-story-text {
@@ -3944,7 +3951,6 @@ section {
     width: 100%;
   }
 }
-
 
 @media (max-width: 480px) {
   .navbar-inner {
