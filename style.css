@@ -1727,10 +1727,11 @@ section {
 }
 
 .box-card.popular {
-  border: 2px solid #c8a97e;
+  border: none;
   transform: scale(1.03);
   box-shadow: 0 10px 40px rgba(103, 72, 70, 0.2);
 }
+
 
 .box-card.popular:hover {
   transform: scale(1.03) translateY(-10px);

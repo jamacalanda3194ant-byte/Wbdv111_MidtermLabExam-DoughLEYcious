@@ -1,4 +1,5 @@
 // ================= cart counter =================
+// kinukuha nito yung cart data sa localStorage, binibilang total quantity ng items.
 function updateCartCount() {
 
   // Read cart items from localStorage.
@@ -6,7 +7,6 @@ function updateCartCount() {
 
   // Compute total quantity by summing each item's qty.
   const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-
 
   const counters = document.querySelectorAll("#cart-count");
   counters.forEach((counter) => {
@@ -16,25 +16,25 @@ function updateCartCount() {
 
 
 // ================= carousel (header)=================
+// kinukuha nito yung para sa slideshow sa header, tapos nagse-set ng interval para mag-auto change every 3 seconds.
 let slides = document.querySelectorAll(".slide");
 let current = 0;
-
+// ginagawa nito active yung first slide pag na load page, para hindi blank agad yung header.
 function showSlide(index) {
   slides.forEach((slide) => slide.classList.remove("active"));
   slides[index].classList.add("active");
 }
-
+// dito naman nag nnext slide siya automatically every 3 seconds.
 function nextSlide() {
   current = (current + 1) % slides.length;
   showSlide(current);
 }
-
 // auto change header every 3 seconds
 setInterval(nextSlide, 3000);
 
 // ================= Open ingredient modal (for menu) =================
 let selectedModalCard = null;
-
+// para naman mag open yung modal pag click yung ingredient(cookie) card sa menu, tapos nilalagay niya yung details ng item sa modal based on data attributes ng card.
 function openIngredientModal(card) {
   const modal = document.getElementById("ingredientModal");
   if (!modal) return;
@@ -80,7 +80,8 @@ function closeIngredientModal() {
   document.body.style.overflow = "";
 }
 
-// ================= Modal quantity and add to cart (menu.html) =================
+// ================= Modal quantity and add to cart =================
+// ito naman yung function na nag aadd ng item sa cart pag nasa modal tapos click yung add to cart button, binabasa niya yung quantity input sa modal.
 function addModalToCart() {
   const modal = document.getElementById("ingredientModal");
   if (!modal) return;
@@ -138,7 +139,6 @@ function addModalToCart() {
 
 
 // ================= notification =================
-
 function showToast(message, options = {}) {
   let toast = document.getElementById("toast");
 
@@ -171,6 +171,7 @@ function showToast(message, options = {}) {
 
 
 // ================= confirmation toast =================
+// ito yung custom confirmation toast na lumalabas pag click yung clear cart button, para ma-confirm ng user if sure siya mag clear ng cart
 function showConfirmToast(message, onConfirm) {
   const existing = document.getElementById("confirm-toast");
   if (existing) existing.remove();
@@ -217,6 +218,7 @@ function showConfirmToast(message, onConfirm) {
 }
 
 // ================= quick add to cart (for recommendation cards) =================
+// ginagawa nito quick add to cart functionality para sa mga recommendation cards sa cart page, para mabilis mag add ng item sa cart without opening modal
 function quickAddToCart(name, price, imgSrc) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   let existing = cart.find((item) => item.name === name);
@@ -258,6 +260,7 @@ function quickAddToCart(name, price, imgSrc) {
 }
 
 // ================= order page =================
+//dito naman yung function na nag se-set ng order type (box of 6, 8, 12, or per piece) sa localStorage pag sa order page click yung button
 function selectOrder(type) {
   localStorage.setItem("orderType", type);
 
@@ -276,6 +279,7 @@ function selectOrder(type) {
 }
 
 // ================= ORDER LIMITS =================
+// ginagawa nito yung logic para i-enforce yung maximum quantity ng items sa cart based on order type
 function getMaxQtyForOrderType() {
   const orderType = localStorage.getItem("orderType") || "";
 
@@ -286,12 +290,12 @@ function getMaxQtyForOrderType() {
   // pag per piece unlimited
   return Infinity;
 }
-
+// ito naman binibilang yung toal ng mga nakalagay sa cart
 function getCartTotalQty() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   return cart.reduce((sum, item) => sum + (item.qty || 0), 0);
 }
-
+// dito naman makikita pag puwede pa mag add ng item sa cart base sa current max limit ng order type
 function canAddQty(extraQty) {
   const maxQty = getMaxQtyForOrderType();
   if (maxQty === Infinity) return true;
@@ -299,7 +303,7 @@ function canAddQty(extraQty) {
   const currentQty = getCartTotalQty();
   return currentQty + extraQty <= maxQty;
 }
-
+// nagbibigay lang to ng warning pag na reach na yung limit ng box
 function showBoxLimitToast() {
   const orderType = localStorage.getItem("orderType") || "";
   const limits = {
@@ -327,7 +331,7 @@ function goToOrderPage() {
 const deliveryRates = {
   ncr: { base: 50, minOrder: 300 },
 };
-
+// function naman nito ay dinidisplay niya yung mga item na nasa cart 
 function displayCart() {
   const cartContainer = document.getElementById("cart-items");
   const subtotalDisplay = document.getElementById("subtotal-price");
@@ -361,7 +365,7 @@ function displayCart() {
     updateCartCount();
     return;
   }
-
+// dito naman cinocompute niya yung total ng mga price sa cart then nag input ng deliv fee
   let subtotal = 0;
   cartContainer.innerHTML = "";
 
@@ -401,6 +405,7 @@ function displayCart() {
 }
 
 // ================= INCREASE QTY =================
+// dito chinecheck niya yung limit bawat dagdag and nirerefresh yung na sa  cart
 function increaseQty(index) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -417,6 +422,7 @@ function increaseQty(index) {
 }
 
 // ================= DECREASE QTY =================
+// dito naman nagbabawas lang siya ng item
 function decreaseQty(index) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -446,6 +452,7 @@ function removeItem(index) {
 }
 
 // ================= for clear cart =================
+// dito nagpapakita siya ng confirmation notif and then nirereload niya yung page after confirming if yes
 function clearCart() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -478,7 +485,8 @@ function checkout() {
   window.location.href = "form.html";
 }
 
-// ================= CHECKOUT PAGE FUNCTIONS (form.html) =================
+// ================= CHECKOUT PAGE FUNCTIONS  =================
+// dito naman pinapakita yung ordered items, prices, and total 
 function displayCheckoutItems() {
   const checkoutContainer = document.getElementById("checkout-items");
   const orderTotals = document.getElementById("order-totals");
@@ -501,7 +509,7 @@ function displayCheckoutItems() {
   if (orderTotals) orderTotals.style.display = "block";
   if (proceedBtn) proceedBtn.disabled = false;
 
-  // ------------ build items HTML and calculate subtotal ------------
+  // ------------ calculate subtotal ------------
   let subtotal = 0;
   let orderType = localStorage.getItem("orderType") || "";
   let itemsHTML = "";
@@ -556,9 +564,9 @@ if (orderType) {
   if (totalEl) totalEl.textContent = "₱" + total.toFixed(2);
 }
 
-// ================= OPEN CHECKOUT MODAL (form.html) =================
+// ================= OPEN CHECKOUT MODAL  =================
 function openCheckoutModal() {
-  // Require Terms & Conditions agreement (per session) before opening checkout form.
+  // Require Terms & Conditions agreement (per session) before opening checkout form
   const alreadyAgreed = sessionStorage.getItem("termsAgreed") === "true";
   if (!alreadyAgreed) {
     openTermsModal();
@@ -716,6 +724,7 @@ function closeCheckoutModal() {
 }
 
 // ================= TERMS MODAL =================
+//ito naman yung pop up na modal pag mag check out and meron siyang checkbox to confirm 
 function openTermsModal() {
   const modal = document.getElementById("terms-modal");
   if (!modal) return;
@@ -986,7 +995,21 @@ function submitOrder(event) {
       receiptDeliveryDateEl.textContent = date;
       receiptDeliveryTimeEl.textContent = time;
 
+      // notes (optional)
+      const receiptNotesSectionEl = document.getElementById("receipt-notes-section");
+      const receiptNotesEl = document.getElementById("receipt-notes");
+      if (receiptNotesSectionEl && receiptNotesEl) {
+        if (notes) {
+          receiptNotesSectionEl.style.display = "block";
+          receiptNotesEl.textContent = notes;
+        } else {
+          receiptNotesSectionEl.style.display = "none";
+          receiptNotesEl.textContent = "";
+        }
+      }
+
       receiptItemsEl.innerHTML = cart
+
         .map((item) => {
           const lineTotal = item.price * item.qty;
           return `<div class="receipt-item">
@@ -1279,7 +1302,7 @@ function getTotal() {
     });
   }
 
-  // ================= Phone Number: block letters in real-time =================
+  // ================= Phone Number block letters in real time =================
   const phoneInput = document.getElementById("checkout-phone");
   if (phoneInput) {
     phoneInput.addEventListener("keypress", function (e) {
